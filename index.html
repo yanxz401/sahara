@@ -1,0 +1,335 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Our Love Story 💖</title>
+
+<style>
+  #photo{
+  position: fixed;
+  bottom: 40px;
+  left: 50% ;
+  transform:translate(-50%, -50%) scale(0.5);
+  opacity: 0 ;
+  width:220px;
+  border-radius:20px;
+  transition: all 0.8s ease;
+  z-index: 5 ;
+}
+body{
+  margin:0;
+  padding:0;
+  font-family:Arial, sans-serif;
+  text-align:center;
+  overflow:hidden;
+  color:white;
+}
+
+/* ===== BACKGROUND ===== */
+.sky{
+  position:fixed;
+  width:100%;
+  height:100%;
+  background:linear-gradient(to top,#ff758c,#ff7eb3,#fad0c4);
+  animation:skyMove 10s infinite alternate;
+  z-index:-2;
+}
+
+@keyframes skyMove{
+  0%{ filter:brightness(1); }
+  100%{ filter:brightness(1.2); }
+}
+
+.sun{
+  position:absolute;
+  width:120px;
+  height:120px;
+  background:radial-gradient(circle,#fff,#ffcc70);
+  border-radius:50%;
+  top:20%;
+  left:50%;
+  transform:translateX(-50%);
+  animation:sunMove 8s infinite alternate;
+}
+
+@keyframes sunMove{
+  0%{ top:20%; }
+  100%{ top:30%; }
+}
+
+/* ===== TEXT ===== */
+h1{ margin-top:60px; }
+
+#relationshipCountdown{
+  font-size:18px;
+  margin-top:10px;
+}
+
+#countdown{
+  font-size:50px;
+  margin-top:20px;
+}
+
+/* ===== BUTTON ===== */
+button{
+  padding:12px 25px;
+  font-size:16px;
+  border:none;
+  border-radius:30px;
+  cursor:pointer;
+  margin:10px;
+}
+
+#yesBtn{ background:#ff4d6d; color:white; }
+#noBtn{ background:white; color:#ff4d6d; position:absolute; }
+
+/* ===== FOTO ===== */
+
+
+/* ===== POPUP ===== */
+.popup{
+  display:none;
+  position:fixed;
+  top:50%;
+  left:50%;
+  transform:translate(-50%,-50%);
+  background:white;
+  color:#ff4d6d;
+  padding:30px;
+  border-radius:20px;
+  z-index:10;
+}
+
+/* ===== HATI JATUH ===== */
+.heart{
+  position:fixed;
+  top:-10px;
+  font-size:20px;
+  animation:fall linear infinite;
+}
+
+@keyframes fall{
+  to{ transform:translateY(100vh); }
+}
+
+/* ===== COUPLE HUG ===== */
+.couple{
+  position:absolute;
+  bottom:0;
+  width:100%;
+  height:220px;
+  display:flex;
+  justify-content:center;
+  align-items:flex-end;
+}
+
+.person{
+  width:70px;
+  height:150px;
+  background:black;
+  border-radius:35px 35px 10px 10px;
+  position:relative;
+}
+
+.person::before{
+  content:"";
+  position:absolute;
+  top:-45px;
+  left:50%;
+  transform:translateX(-50%);
+  width:65px;
+  height:65px;
+  background:black;
+  border-radius:50%;
+}
+
+.left{ animation:hugLeft 6s infinite ease-in-out; }
+.right{ animation:hugRight 6s infinite ease-in-out; }
+
+@keyframes hugLeft{
+  0%{ transform:translateX(-140px); }
+  50%{ transform:translateX(-20px); }
+  100%{ transform:translateX(-140px); }
+}
+
+@keyframes hugRight{
+  0%{ transform:translateX(140px); }
+  50%{ transform:translateX(20px); }
+  100%{ transform:translateX(140px); }
+}
+
+/* ===== LOVE BURST ===== */
+.love-container{
+  position:absolute;
+  bottom:170px;
+  width:200px;
+  height:200px;
+  pointer-events:none;
+}
+
+.love{
+  position:absolute;
+  font-size:25px;
+  animation:floatLove 2s ease-out forwards;
+}
+
+@keyframes floatLove{
+  0%{ opacity:1; transform:translateY(0) scale(0.5); }
+  100%{ opacity:0; transform:translateY(-120px) scale(1.5); }
+}
+</style>
+</head>
+
+<body>
+
+<div class="sky"></div>
+<div class="sun"></div>
+
+<h1>Our Love Story 💕</h1>
+
+<div id="relationshipCountdown"></div>
+<div id="countdown">3</div>
+
+<div id="buttons" style="display:none;">
+  <button id="yesBtn">Iya 💖</button>
+  <button id="noBtn">Enggak 😜</button>
+</div>
+
+<img id="photo" src="foto.jpeg.jpeg">
+
+<div class="popup" id="popup">
+  <h2>Aku Cinta Kamu 💖</h2>
+  <p>Selamanya bareng ya 😍</p>
+</div>
+
+<!-- COUPLE -->
+<div class="couple">
+  <div class="person left"></div>
+  <div class="person right"></div>
+  <div class="love-container"></div>
+</div>
+
+<audio autoplay loop>
+  <source src="musik.mp3" type="audio/mp3">
+</audio>
+
+<script>
+// ===== TANGGAL JADIAN =====
+const anniversaryDate = new Date(2025, 9, 3, 15, 58, 0);
+
+function updateRelationshipTime(){
+  const now = new Date();
+  const diff = now - anniversaryDate;
+
+  if(diff < 0){
+    document.getElementById("relationshipCountdown").innerHTML =
+    "Hari jadian kita belum tiba 💖";
+    return;
+  }
+
+  const days = Math.floor(diff/(1000*60*60*24));
+  const hours = Math.floor((diff/(1000*60*60))%24);
+  const minutes = Math.floor((diff/(1000*60))%60);
+  const seconds = Math.floor((diff/1000)%60);
+
+  document.getElementById("relationshipCountdown").innerHTML =
+  `Kita sudah bersama selama 💖<br>
+  ${days} Hari ${hours} Jam ${minutes} Menit ${seconds} Detik`;
+}
+
+setInterval(updateRelationshipTime,1000);
+updateRelationshipTime();
+
+// ===== COUNTDOWN DRAMA =====
+let timeLeft=3;
+const countdown=document.getElementById("countdown");
+const buttons=document.getElementById("buttons");
+
+const timer=setInterval(()=>{
+  timeLeft--;
+  countdown.textContent=timeLeft;
+
+  if(timeLeft<=0){
+    clearInterval(timer);
+    countdown.innerHTML="💖";
+    buttons.style.display="block";
+  }
+},1000);
+
+// ===== NO BUTTON LARI =====
+const noBtn=document.getElementById("noBtn");
+noBtn.addEventListener("mouseover",()=>{
+  noBtn.style.top=Math.random()*window.innerHeight+"px";
+  noBtn.style.left=Math.random()*window.innerWidth+"px";
+});
+
+// ===== YES CLICK =====
+const yesBtn=document.getElementById("yesBtn");
+const photo=document.getElementById("photo");
+const popup=document.getElementById("popup");
+
+// FOTO MUNCUL PAS HUG (detik ke-3)
+setInterval(()=>{
+  photo.style.opacity="1";
+  photo.style.transform="translate(-50%, -50%)scale(1)";
+
+  createLoveBurst();
+  startConfetti();
+
+  setTimeout(()=>{
+    photo.style.opacity="0";
+    photo.style.transform="translate(-50%, -50%)scale(0.5)";
+  },2000);
+
+},6000);
+
+
+// ===== HATI JATUH =====
+function createHeart(){
+  const heart=document.createElement("div");
+  heart.classList.add("heart");
+  heart.innerText="❤️";
+  heart.style.left=Math.random()*window.innerWidth+"px";
+  heart.style.animationDuration=(Math.random()*3+2)+"s";
+  document.body.appendChild(heart);
+  setTimeout(()=>heart.remove(),5000);
+}
+setInterval(createHeart,300);
+
+// ===== CONFETTI FIX =====
+function startConfetti(){
+  for(let i=0;i<150;i++){
+    const confetti=document.createElement("div");
+    confetti.style.position="fixed";
+    confetti.style.width="8px";
+    confetti.style.height="8px";
+    confetti.style.background='hsl(${Math.random()*360},100%,50%)';
+    confetti.style.top="-10px";
+    confetti.style.left=Math.random()*window.innerWidth+"px";
+    confetti.style.transition="5s linear";
+    document.body.appendChild(confetti);
+    setTimeout(()=>confetti.style.top="100vh",10);
+    setTimeout(()=>confetti.remove(),5000);
+  }
+}
+
+// ===== LOVE BURST SAAT HUG =====
+const loveContainer=document.querySelector(".love-container");
+
+function createLoveBurst(){
+  for(let i=0;i<10;i++){
+    const love=document.createElement("div");
+    love.classList.add("love");
+    love.innerText="❤️";
+    love.style.left=Math.random()*150+"px";
+    love.style.top=Math.random()*50+"px";
+    loveContainer.appendChild(love);
+    setTimeout(()=>love.remove(),2000);
+  }
+}
+setInterval(createLoveBurst,6000);
+</script>
+
+</body>
+</html>
